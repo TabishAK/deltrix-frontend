@@ -1,41 +1,50 @@
 import React from "react";
-import { Button, Card, CardBody, FormGroup, Form, Input, Row, Col, } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
+  Row,
+  Col,
+} from "reactstrap";
 import { post } from "../../request/request";
-
 
 class Login extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      email: "admin@gmail.com",
-      password: "hash"
-    }
+      email: "bilal@deltrix.com",
+      password: "123",
+    };
   }
 
   signup() {
     const { email, password } = this.state;
     if (email != "" && password != "") {
-      const obj = { email, password }
+      const obj = { email, password };
       post(obj, "adminauth/signin")
-      .then((res) => {
+        .then((res) => {
           let data = res.data.user;
           localStorage.setItem("currentUser", JSON.stringify(data));
           this.props.history.push("/");
           delete data.password;
-        }).catch((err) => {
-          console.log(err)
         })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
   onchange(e) {
     this.setState({
-      [e.target.name]: e.target.value
-    })
+      [e.target.name]: e.target.value,
+    });
   }
 
   render() {
-    const { email, password } = this.state
+    const { email, password } = this.state;
     return (
       <>
         <Col lg="5" md="7">
@@ -47,10 +56,25 @@ class Login extends React.Component {
               </div>
               <Form role="form">
                 <FormGroup className="mb-3">
-                  <Input name={"email"} id="input-address" value={email} onChange={this.onchange.bind(this)} placeholder="Email" type="email" autoComplete="new-email" />
+                  <Input
+                    name={"email"}
+                    id="input-address"
+                    value={email}
+                    onChange={this.onchange.bind(this)}
+                    placeholder="Email"
+                    type="email"
+                    autoComplete="new-email"
+                  />
                 </FormGroup>
                 <FormGroup>
-                  <Input name={"password"} value={password} onChange={this.onchange.bind(this)} placeholder="Password" type="password" autoComplete="new-password" />
+                  <Input
+                    name={"password"}
+                    value={password}
+                    onChange={this.onchange.bind(this)}
+                    placeholder="Password"
+                    type="password"
+                    autoComplete="new-password"
+                  />
                 </FormGroup>
                 <div className="custom-control custom-control-alternative custom-checkbox">
                   <input
@@ -58,12 +82,20 @@ class Login extends React.Component {
                     id=" customCheckLogin"
                     type="checkbox"
                   />
-                  <label className="custom-control-label" htmlFor=" customCheckLogin">
+                  <label
+                    className="custom-control-label"
+                    htmlFor=" customCheckLogin"
+                  >
                     <span className="text-muted">Remember me</span>
                   </label>
                 </div>
                 <div className="text-center">
-                  <Button onClick={this.signup.bind(this)} className="my-4" color="primary" type="button">
+                  <Button
+                    onClick={this.signup.bind(this)}
+                    className="my-4"
+                    color="primary"
+                    type="button"
+                  >
                     Sign in
                   </Button>
                 </div>
@@ -72,13 +104,14 @@ class Login extends React.Component {
           </Card>
           <Row className="mt-3">
             <Col xs="6">
-              <a className="text-light"
+              <a
+                className="text-light"
                 href="#pablo"
-                onClick={e => e.preventDefault()} >
+                onClick={(e) => e.preventDefault()}
+              >
                 <small>Forgot password?</small>
               </a>
             </Col>
-
           </Row>
         </Col>
       </>
